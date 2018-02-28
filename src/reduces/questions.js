@@ -160,7 +160,9 @@ const initialState = [
         "is_standard_answer": 0
       }]
     }],
-    answerid: [], //答案id
+    answer: [], //答案id
+    right_answer:[2, 7, 12, 13, 18], //正确答案
+    scoreTipsArr:['你说，是不是把知识都还给小学老师了？','还不错，但还需要继续加油哦！','不要嘚瑟还有进步的空间！','智商离爆表只差一步了！','你也太聪明啦，葡萄之家欢迎你！'],
   }
 ]
 
@@ -171,11 +173,17 @@ const questions = (state = initialState, action) => {
         {
           ...state,
           itemNum: action.itemNum,
-          answerid:[...state.answerid, action.answerid],
-          chooseId:action.chooseId
+          answer:[...state.answer, action.answer]
         }
       ]
+    case 'GET_ANSWER' :
+      return {
+        answer:state.answer,
+        right_answer:state.right_answer
+      }
     default :
       return state;
   }
 }
+
+export default questions
