@@ -1,5 +1,5 @@
-const initialState = [
-  {
+const initialState =   {
+    active:null,
     level: '第一周', //活动周数
     itemNum: 1, //第几题
     allTime: 0,  //总共用时
@@ -164,18 +164,23 @@ const initialState = [
     right_answer:[2, 7, 12, 13, 18], //正确答案
     scoreTipsArr:['你说，是不是把知识都还给小学老师了？','还不错，但还需要继续加油哦！','不要嘚瑟还有进步的空间！','智商离爆表只差一步了！','你也太聪明啦，葡萄之家欢迎你！'],
   }
-]
 
 const questions = (state = initialState, action) => {
   switch (action.type) {
+    case 'CHANGE_ACTIVE' :
+        return {
+          ...state,
+          active:action.active,
+          answer:[...state.answer,action.active]
+        }
+    case 'GET_CURRENT_QUESTION' :
+      return state.itemDetail[action.index];
     case 'CHOOSE_ANSWER' :
-      return [
-        {
+      return {
           ...state,
           itemNum: action.itemNum,
           answer:[...state.answer, action.answer]
         }
-      ]
     case 'GET_ANSWER' :
       return {
         answer:state.answer,
