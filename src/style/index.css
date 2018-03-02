@@ -105,16 +105,14 @@ body {
   position: absolute;
   height: 7.0rem;
   width: 8.0rem;
-  top: 5.4rem;
-  left: 3rem;
+  top: 6.4rem;
+  left: 4rem;
   -webkit-font-smoothing: antialiased;
-  border:1px solid red;
 }
 .item_title{
   font-size: 0.65rem;
   color: #fff;
   line-height: 0.7rem;
-  text-align: center;
 }
 .item_list {
   font-size: 0;

@@ -20,13 +20,19 @@ let Question = ({question, active, match, dispatch}) => {
     }
   }
 
+  const currentQuestion = {}
+  const getCurrentQuestion = () => {
+    console.log(match);
+    return match.params.id;
+  }
+
   return (
     <Router>
       <div className="question_body">
         <div className='top_tips'><div className="num_tip">题目{match.params.id}</div> </div>
         <div className='item_back item_container_style'></div>
         <div className='item_list_container'>
-          <div className="item_title">{question.topic_name}{active}</div>
+          <div className="item_title">{question.topic_name}{getCurrentQuestion()}</div>
           <ul>
             {
               question.topic_answer.map((option, index) => {

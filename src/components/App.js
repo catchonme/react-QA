@@ -11,8 +11,8 @@ const Home = () => (
     <div className="home_body">
       <div className='top_tips'><div className="num_tip">第一周</div> </div>
       <div className='home_logo item_container_style'></div>
-      <Link to="/question-list/1"><div className="start button_style"></div></Link>
-      <Route path="/question-list/:id" component={QuestionList}/>
+      <Link to={{pathname:"/question-list/1",state:{question:2}}}><div className="start button_style"></div></Link>
+      <Route path="/question-list/:id" ques_id={2} component={QuestionList}/>
     </div>
   </Router>
 )
