@@ -1,15 +1,5 @@
-export const chooseAnswer = (id, answer) => ({
-  type:'CHOOSE_ANSWER',
-  itemNum:id,
-  answer:answer
-})
-
-export const getCurrentQuestion = (index) => ({
-  type:'GET_CURRENT_QUESTION',
-  index:index
-})
-
-export const changeActive = (active) => ({
-  type:'CHANGE_ACTIVE',
-  active: active
+export const saveAnswer = (question_index, option_index) => ({
+  type:'SAVE_ANSWER',
+  question_index:question_index,
+  option_index:option_index
 })

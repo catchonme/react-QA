@@ -1,40 +1,52 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import {changeActive, chooseAnswer} from "../actions";
+import { saveAnswer } from "../actions";
 import {
   BrowserRouter as Router,
   Link,
   Route
 } from 'react-router-dom'
-import Result from '../components/Result'
+import Result from '../containers/Result'
 
 class SingleQuestion extends Component {
 
   static propTypes = {
     questions: PropTypes.array.isRequired,
-    changeQuestionActive: PropTypes.func.isRequired,
+    saveAnswer: PropTypes.func.isRequired,
   }
 
   state = {
     question_index: 0,
-    question:{}
+    question:{},
+    option_index:''
   }
 
-  incrementIndex = (question_index) => {
-    const { questions } = this.props
-    this.setState({question_index: question_index + 1, question:questions[question_index + 1]})
+  incrementIndex = (question_index, option_index, bool) => {
+    if (bool) {
+      const { questions, saveAnswer } = this.props
+      this.setState({question_index: question_index + 1, question:questions[question_index + 1], option_index:''})
+      saveAnswer(question_index, option_index)
+    } else {
+      const { saveAnswer } = this.props
+      this.setState({option_index:''})
+      saveAnswer(question_index, option_index)
+    }
   }
 
-  renderButton({question_index, length}) {
+  chooseItem = (index) => {
+    this.setState({option_index:index})
+  }
+
+  renderButton({question_index, length, option_index}) {
     if (question_index < (length-1)) {
       return (
-        <div className='next_item button_style' onClick={() => this.incrementIndex(question_index)}></div>
+        <div className='next_item button_style' onClick={() => this.incrementIndex(question_index, option_index, true)}></div>
       )
     } else {
       return (
         <div>
-          <Link to='/result'><div className='submit_item button_style'></div></Link>
+          <Link to='/result'><div className='submit_item button_style' onClick={() => this.incrementIndex(question_index, option_index, false)}></div></Link>
           <Route path='/result' component={Result}/>
         </div>
       )
@@ -51,9 +63,9 @@ class SingleQuestion extends Component {
   }
 
   render() {
-    const { active, questions, changeQuestionActive } = this.props
+    const { questions } = this.props
     const length = questions.length;
-    const { question, question_index } = this.state
+    const { question, question_index, option_index } = this.state
     const chooseType = (index) => {
       switch(index) {
         case 0 : return 'A';break;
@@ -74,15 +86,15 @@ class SingleQuestion extends Component {
             <ul>
               {
                 question.topic_answer.map((option, index) => {
-                  return <li className="item_list" onClick={() => changeQuestionActive(index)} key={index}>
-                    <span className={active === index ? 'has_choosed option_style' : 'option_style'}>{chooseType(index)}</span>
+                  return <li className="item_list" onClick={() => this.chooseItem(index)} key={index}>
+                    <span className={option_index === index ? 'has_choosed option_style' : 'option_style'}>{chooseType(index)}</span>
                     <span className="option_detail">{option.answer_name}</span>
                   </li>
                 })
               }
             </ul>
           </div>
-          {this.renderButton({question_index, length})}
+          {this.renderButton({question_index, length, option_index})}
         </div>
       </Router>
     )
@@ -90,13 +102,11 @@ class SingleQuestion extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  active: state.questions.active,
   questions: state.questions.itemDetail
 })
 
 const mapDispatchToProps = {
-  onClick: chooseAnswer,
-  changeQuestionActive : changeActive
+  saveAnswer : saveAnswer
 }
 
 const Question = connect(
