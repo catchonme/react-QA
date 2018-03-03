@@ -20,7 +20,7 @@ class ShowResult extends Component {
 
   componentWillMount() {
     const { answer, right_answer, scoreTips } = this.props
-    var score=0,score_tip;
+    let score=0,score_tip;
     answer.map((item, index) => {
       item == right_answer[index] ? score += 20 : ''
     })

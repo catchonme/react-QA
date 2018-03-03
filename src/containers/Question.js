@@ -24,9 +24,14 @@ class SingleQuestion extends Component {
 
   incrementIndex = (question_index, option_index, bool) => {
     if (bool) {
-      const { questions, saveAnswer } = this.props
-      this.setState({question_index: question_index + 1, question:questions[question_index + 1], option_index:''})
-      saveAnswer(question_index, option_index)
+      if (typeof(option_index) != 'number') {
+        alert('请选择答案!');
+        return;
+      } else {
+        const { questions, saveAnswer } = this.props
+        this.setState({question_index: question_index + 1, question:questions[question_index + 1], option_index:''})
+        saveAnswer(question_index, option_index)
+      }
     } else {
       const { saveAnswer } = this.props
       this.setState({option_index:''})
@@ -55,11 +60,9 @@ class SingleQuestion extends Component {
 
   componentWillMount() {
     const { questions } = this.props;
-    const {question_index} = this.state
-    const length = questions.length;
-    const temp_question_index = question_index > (length-1) ? (length-1) : question_index;
-    const question = questions[temp_question_index];
-    this.setState({question_index:temp_question_index, question:question})
+    const { question_index } = this.state
+    const question = questions[question_index];
+    this.setState({ question:question })
   }
 
   render() {
@@ -79,7 +82,7 @@ class SingleQuestion extends Component {
     return (
       <Router>
         <div className="question_body">
-          <div className='top_tips'><div className="num_tip">题目</div> </div>
+          <div className='top_tips'><div className="num_tip">题目{question_index+1}</div> </div>
           <div className='item_back item_container_style'></div>
           <div className='item_list_container'>
             <div className="item_title">{question.topic_name}</div>
