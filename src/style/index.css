@@ -222,7 +222,6 @@ body {
   background:url(../images/5-1.png) no-repeat;
   background-size:100% 100%;
   opacity:0.92;
-  z-index:100;
 }
 .share_img {
   height:10.975rem;
@@ -231,6 +230,7 @@ body {
   top:0.5rem;
   left:50%;
   margin-left:-5.975rem;
-  background:url(../images/5-2.png) no-repeat;
-  background-size:100% 100%;
+}
+.hide_cover {
+  display:none
 }
