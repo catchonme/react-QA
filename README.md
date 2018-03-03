@@ -7,6 +7,8 @@
 ```bash
 git clone https://github.com/catchonme/react-QA.git
 
+cd react-QA
+
 npm install 
 
 npm start
